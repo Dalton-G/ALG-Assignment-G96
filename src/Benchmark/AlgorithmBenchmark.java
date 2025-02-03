@@ -18,10 +18,10 @@ import java.util.concurrent.TimeUnit;
 
 public class AlgorithmBenchmark {
 
-    @Param({"100", "1000", "10000"})
+    @Param({"100", "1000"})
     private int numDays;
 
-    @Param({"5", "50", "500"})
+    @Param({"5", "50"})
     private int numQueries;
 
     private Algorithm bruteForce;
@@ -39,8 +39,8 @@ public class AlgorithmBenchmark {
     @Benchmark
     public void benchmarkBruteForce() {
         for (List<Integer> query : queries) {
-            int start = query.getFirst();
-            int end = query.getLast();
+            int start = query.get(0);
+            int end = query.get(1);
             bruteForce.getTotalReturns(start, end);
         }
     }
@@ -48,8 +48,8 @@ public class AlgorithmBenchmark {
     @Benchmark
     public void benchmarkPrefixSum() {
         for (List<Integer> query : queries) {
-            int start = query.getFirst();
-            int end = query.getLast();
+            int start = query.get(0);
+            int end = query.get(1);
             prefixSum.getTotalReturns(start, end);
         }
     }

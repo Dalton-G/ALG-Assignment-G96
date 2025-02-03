@@ -13,7 +13,7 @@ public class PrefixSum implements RangeSum {
 
     private void generatePrefixSums() {
         prefixSums = new double[data.size()];
-        prefixSums[0] = data.getFirst();
+        prefixSums[0] = data.get(0);
         for (int i = 1; i < data.size(); i++) {
             prefixSums[i] = prefixSums[i - 1] + data.get(i);
         }

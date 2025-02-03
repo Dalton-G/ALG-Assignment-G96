@@ -40,8 +40,8 @@ public class Main {
         long totalTime = 0;
 
         for (List<Integer> query : queries) {
-            int start = query.getFirst();
-            int end = query.getLast();
+            int start = query.get(0);
+            int end = query.get(1);
 
             long startTime = System.nanoTime();
             double result = Math.round(algorithm.getTotalReturns(start, end) * 100.00) / 100.00;
