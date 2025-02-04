@@ -18,10 +18,10 @@ import java.util.concurrent.TimeUnit;
 
 public class AlgorithmBenchmark {
 
-    @Param({"100", "1000"})
+    @Param({"10", "100", "1000", "10000", "100000", "1000000"})
     private int numDays;
 
-    @Param({"5", "50"})
+    @Param({"100"})
     private int numQueries;
 
     private Algorithm bruteForce;
