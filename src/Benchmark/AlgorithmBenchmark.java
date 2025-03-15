@@ -5,9 +5,9 @@ import Algorithms.BruteForce;
 import Algorithms.PrefixSum;
 import TestCases.InvestmentDataGenerator;
 import org.openjdk.jmh.annotations.*;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -42,6 +42,13 @@ public class AlgorithmBenchmark {
             int start = query.get(0);
             int end = query.get(1);
             bruteForce.getTotalReturns(start, end);
+
+            // Get the actual BruteForce instance
+            BruteForce bfInstance = (BruteForce) bruteForce.getImplementation();
+
+            // Measure BruteForce class + its data list
+            long bfSize = SpaceComplexityAgent.getObjectSize(bfInstance) +
+                    SpaceComplexityAgent.getObjectSize(bfInstance.getData());
         }
     }
 
@@ -51,6 +58,14 @@ public class AlgorithmBenchmark {
             int start = query.get(0);
             int end = query.get(1);
             prefixSum.getTotalReturns(start, end);
+
+            // Get the actual PrefixSum instance
+            PrefixSum psInstance = (PrefixSum) prefixSum.getImplementation();
+
+            // Measure PrefixSum class + data + prefixSums array
+            long psSize = SpaceComplexityAgent.getObjectSize(psInstance) +
+                    SpaceComplexityAgent.getObjectSize(psInstance.getData()) +
+                    SpaceComplexityAgent.getObjectSize(psInstance.getPrefixSums());
         }
     }
 }

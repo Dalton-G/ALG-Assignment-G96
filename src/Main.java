@@ -1,20 +1,25 @@
 import Algorithms.Algorithm;
 import Algorithms.BruteForce;
 import Algorithms.PrefixSum;
+import TestCases.InvestmentDataMonth;
+import TestCases.InvestmentDataWeek;
 import TestCases.InvestmentDataYear;
-
+import Benchmark.SpaceComplexityAgent;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         // Load Investment Data from Test Cases
-        List<Double> data = InvestmentDataYear.getDailyReturns();
-        List<List<Integer>> queries = InvestmentDataYear.getQueries();
+        List<Double> data = InvestmentDataMonth.getDailyReturns();
+        List<List<Integer>> queries = InvestmentDataMonth.getQueries();
 
         // Init both Algorithms using Bridge Pattern
         Algorithm bruteForce = new Algorithm(new BruteForce(data));
         Algorithm prefixSum = new Algorithm(new PrefixSum(data));
+
+        // Measure memory usage before running the algorithms
+        measureMemoryUsage(bruteForce, prefixSum);
 
         // Brute Force Results (with timer)
         long runBruteForce = runQueries(bruteForce, queries, "Brute Force: ");
@@ -58,5 +63,32 @@ public class Main {
         System.out.println("Time Taken: " + timeTaken);
         System.out.println("Total Time: " + totalTime + " ns");
         return totalTime;
+    }
+    private static void measureMemoryUsage(Algorithm bruteForce, Algorithm prefixSum) {
+        System.out.println("\nMemory Usage:");
+
+        // Get the actual BruteForce and PrefixSum instances
+        BruteForce bfInstance = (BruteForce) bruteForce.getImplementation();
+        PrefixSum psInstance = (PrefixSum) prefixSum.getImplementation();
+
+        // Measure BruteForce memory usage
+        long bruteForceSize = SpaceComplexityAgent.getObjectSize(bfInstance) +
+                SpaceComplexityAgent.getObjectSize(bfInstance.getData());
+
+        // Measure PrefixSum memory usage
+        long prefixSumSize = SpaceComplexityAgent.getObjectSize(psInstance) +
+                SpaceComplexityAgent.getObjectSize(psInstance.getData()) +
+                SpaceComplexityAgent.getObjectSize(psInstance.getPrefixSums());
+
+        System.out.println("BruteForce total size: " + bruteForceSize + " bytes");
+        System.out.println("PrefixSum total size: " + prefixSumSize + " bytes");
+
+        bfInstance.getData().forEach(d-> System.out.println(d.toString()));
+        System.out.println("--------------------------------------------------------");
+        psInstance.getData().forEach(d-> System.out.println(d.toString()));
+        System.out.println("--------------------------------------------------------");
+        psInstance.getPrefixSums().forEach(d-> System.out.println(d.toString()));
+
+
     }
 }

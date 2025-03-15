@@ -1,10 +1,11 @@
 package Algorithms;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PrefixSum implements RangeSum {
     private final List<Double> data;
-    private double[] prefixSums;
+    private List<Double> prefixSums;
 
     public PrefixSum(List<Double> data) {
         this.data = data;
@@ -12,19 +13,28 @@ public class PrefixSum implements RangeSum {
     }
 
     private void generatePrefixSums() {
-        prefixSums = new double[data.size()];
-        prefixSums[0] = data.get(0);
+        prefixSums = new ArrayList<>();
+        prefixSums.add(data.get(0));
+
         for (int i = 1; i < data.size(); i++) {
-            prefixSums[i] = prefixSums[i - 1] + data.get(i);
+            prefixSums.add(prefixSums.get(i - 1) + data.get(i));
         }
     }
 
     @Override
     public double getTotalReturns(int startIndex, int endIndex) {
         if (startIndex == 0) {
-            return prefixSums[endIndex];
+            return prefixSums.get(endIndex);
         } else {
-            return prefixSums[endIndex] - prefixSums[startIndex - 1];
+            return prefixSums.get(endIndex) - prefixSums.get(startIndex - 1);
         }
+    }
+
+    public List<Double> getData() {
+        return data;
+    }
+
+    public List<Double> getPrefixSums() {
+        return prefixSums;
     }
 }

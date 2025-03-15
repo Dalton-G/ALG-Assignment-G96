@@ -10,4 +10,8 @@ public class Algorithm {
     public double getTotalReturns(int startIndex, int endIndex) {
         return rs.getTotalReturns(startIndex, endIndex);
     }
+
+    public RangeSum getImplementation() {
+        return rs;
+    }
 }

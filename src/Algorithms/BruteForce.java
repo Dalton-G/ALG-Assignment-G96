@@ -17,4 +17,8 @@ public class BruteForce implements RangeSum {
         }
         return sum;
     }
+    public List<Double> getData() {
+        return data;
+    }
+
 }
